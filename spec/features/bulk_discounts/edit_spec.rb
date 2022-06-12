@@ -9,12 +9,12 @@ RSpec.describe BulkDiscount, type: :feature do
     @discount3 = @merchant1.bulk_discounts.create!(percent: 30, threshold: 400)
     
     visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@discount2.id}/edit"
-    save_and_open_page
-    end
+  end
 
-    it "edit page has a form prepopulated with current discount attributes" do
-      expect(page).to have_field('percent', with: '20')
-      expect(page).to have_field('threshold', with: '300')
+  it "edit page has a form prepopulated with current discount attributes" do
+    save_and_open_page
+      expect(page).to have_field(:percent, with: "20")
+      expect(page).to have_field(:threshold, with: "300")
       expect(page).to_not have_field(with: "")
     end
 
@@ -31,9 +31,11 @@ RSpec.describe BulkDiscount, type: :feature do
     end
 
     it 'form updates all valid discount information provided when submitted and redirects to bulk discount show page' do
-      fill_in "percent", with: '25'
-      fill_in "threshold", with: '350'
+  
+      fill_in :percent, with: '25'
+      fill_in :threshold, with: '350'
       click_on "Submit"
+      save_and_open_page
       expect(current_path).to match(merchant_bulk_discount_path(@merchant1, @discount2))
       within("#percent") do
         expect(page).to have_content("Percent discount: 25%")
