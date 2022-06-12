@@ -114,7 +114,7 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_link(@item_2.invoice_ids)
     expect(page).to_not have_link(@item_3.invoice_ids)
 
-    click_link("#{@item_1.invoice_ids}", match: :first)
+    click_link("#{@item_1.invoice_ids}", match: :first)  #deprecated in future Capybara
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
   end
 

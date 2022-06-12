@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
 before_action :find_merchant, only: [:index, :new, :create]
-before_action :find_discount_and_merchant, only: [:show, :update]
+before_action :find_discount_and_merchant, only: [:show, :update, :destroy]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -24,7 +24,7 @@ before_action :find_discount_and_merchant, only: [:show, :update]
     # find_merchant
     discount = BulkDiscount.new(bulk_discount_params)
     if discount.save
-      # flash[:success]= "New Discount Created"
+      # flash.success= "New Discount Created"
       redirect_to merchant_bulk_discounts_path(@merchant), notice: "New Discount Created"
     else
       redirect_to new_merchant_bulk_discount_path(@merchant), notice: "Invalid input. Use only positive integers"
@@ -32,6 +32,8 @@ before_action :find_discount_and_merchant, only: [:show, :update]
   end
 
   def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to merchant_bulk_discounts_path(@merchant)
   end
 
   private

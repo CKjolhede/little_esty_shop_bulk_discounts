@@ -18,10 +18,10 @@
 <ul class='ml-auto col-sm-4'>
     <%# <p class='ml-auto col-sm-5'>Bulk Discounts</p> %>
       <p><% @bulk_discounts.each do |discount| %>
-    <section id = "discounts-<%=discount.id%>" >
-            <li><%= link_to "#{discount.percent}% off if #{discount.threshold} items purchased", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %></li>
-        <% end %>
-      </p>
-    </section>
+    <section id="discounts-<%=discount.id%>" >
+            <li><%= link_to "#{discount.percent}% off if #{discount.threshold} items purchased", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :get %> </li>
+            <%= button_to "Delete", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
+    </section></p>
+    <% end %>  
   </ul>
   </body>

@@ -77,7 +77,7 @@ describe "merchant invoices index" do
     expect(page).to have_link(@invoice_7.id)
     expect(page).to_not have_link(@invoice_8.id)
 
-    click_link "#{@invoice_1.id}"
+    click_link "#{@invoice_1.id}"  #deprecated in future capybara
 
     expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice_1))
   end

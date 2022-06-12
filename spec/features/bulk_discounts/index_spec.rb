@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BulkDiscount, type: :feature do
-  context "merchant bulk discount page" do
+  context "merchant bulk discounts page" do
     before(:each) do
       @merchant1 = Merchant.create!(name: 'I Care')
       @discount1 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 100)
@@ -19,7 +19,6 @@ RSpec.describe BulkDiscount, type: :feature do
 
         click_on "10% off if 100 items purchased"
         expect(current_path).to match("/merchant/#{@merchant1.id}.bulk_discounts/#{@discount1.id}")
-      
     end
 
     it 'has a link to page with form to create new discount' do
@@ -29,5 +28,17 @@ RSpec.describe BulkDiscount, type: :feature do
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
       end
     end
+  
+    it "has a delete button next to each bulk discount which deletes the discount and return to the bulk discount index page" do
+      expect(page).to have_content("20% off if 300 items purchased")
+      within("#discounts-#{@discount1.id}") do 
+        expect(page).to have_content("10% off if 100 items purchased")
+        expect(page).to have_button("Delete")
+        click_button
+      end
+        expect(current_path).to match("/merchant/#{@merchant1.id}/bulk_discounts")
+        expect(page).to_not have_content("10% off if 100 items purchased")
+      expect(page).to have_content("20% off if 300 items purchased")
+    end 
   end
 end
