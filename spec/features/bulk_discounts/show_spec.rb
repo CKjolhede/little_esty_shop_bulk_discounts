@@ -18,9 +18,9 @@ RSpec.describe BulkDiscount, type: :feature do
     end
   
     it 'has a link to an edit page' do
-      expect(page).to have_link("edit discount")
-      click_on "edit discount"
-      expect(current_path).to match(edit_merchant_bulk_discount_path(@merchant1))
+      expect(page).to have_link("Edit Discount")
+      click_on "Edit Discount"
+      expect(current_path).to match(edit_merchant_bulk_discount_path(@merchant1, @discount2))
     end
   
   
