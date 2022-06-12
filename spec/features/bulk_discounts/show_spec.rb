@@ -9,12 +9,15 @@ RSpec.describe BulkDiscount, type: :feature do
       @discount3 = @merchant1.bulk_discounts.create!(percent: 30, threshold: 400)
     
       visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@discount2.id}"
-      save_and_open_page
     end
 
     it 'displays the bulk discounts percentage and threshold information' do
-    expect(page).to have_content("Percent discount: 20%")
-    expect(page).to have_content("Min purchase quantity required: 300")
+      within("#percent") do
+        expect(page).to have_content("Percent discount: 20%")
+      end
+      within("#threshold") do
+        expect(page).to have_content("Min purchase quantity required: 300")
+      end
     end
   
     it 'has a link to an edit page' do
@@ -22,9 +25,5 @@ RSpec.describe BulkDiscount, type: :feature do
       click_on "Edit Discount"
       expect(current_path).to match(edit_merchant_bulk_discount_path(@merchant1, @discount2))
     end
-  
-  
   end
-
-
 end
