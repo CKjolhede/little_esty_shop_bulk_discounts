@@ -1,4 +1,4 @@
-require 'rails_helper'
+ require 'rails_helper'
 
 describe "merchant items index" do
   before :each do
