@@ -1,0 +1,14 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><strong><h2><%= @merchant.name %></h2></strong></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
+<h2><%= @merchant.name %> Bulk Discount</h2>
+<h4><%= "Percent discount: #{@bulk_discount.percent}%"%></h4>
+<h4><%= "Min purchase quantity required: #{@bulk_discount.threshold}" %></h4><br>

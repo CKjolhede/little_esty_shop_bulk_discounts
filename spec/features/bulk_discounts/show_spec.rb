@@ -9,6 +9,7 @@ RSpec.describe BulkDiscount, type: :feature do
       @discount3 = @merchant1.bulk_discounts.create!(percent: 30, threshold: 400)
     
       visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@discount2.id}"
+      save_and_open_page
     end
 
     it 'display the bulk discounts percentage and threshold information' do
