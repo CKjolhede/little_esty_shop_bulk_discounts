@@ -12,9 +12,19 @@ RSpec.describe BulkDiscount, type: :feature do
       save_and_open_page
     end
 
-    it 'display the bulk discounts percentage and threshold information' do
+    it 'displays the bulk discounts percentage and threshold information' do
     expect(page).to have_content("Percent discount: 20%")
     expect(page).to have_content("Min purchase quantity required: 300")
     end
+  
+    it 'has a link to an edit page' do
+      expect(page).to have_link("edit discount")
+      click_on "edit discount"
+      expect(current_path).to match(edit_merchant_bulk_discount_path(@merchant1))
+    end
+  
+  
   end
+
+
 end
