@@ -19,7 +19,7 @@ class Invoice < ApplicationRecord
     .where('invoice_items.quantity >= bulk_discounts.threshold')
     .select('invoice_items.id, max(invoice_items.unit_price * invoice_items.quantity * (bulk_discounts.percent / 100.0)) as total_discount')
     .group('invoice_items.id')
-    .sum(&:total_discount)
+    .sum(&:total_discount) # '&' prevents subsequent method call if method is nil
   end
 
   def discounted_items
