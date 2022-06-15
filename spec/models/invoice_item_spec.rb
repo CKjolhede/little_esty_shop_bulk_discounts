@@ -55,9 +55,9 @@ RSpec.describe InvoiceItem, type: :model do
       @discount21 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 20)
       @discountnull = @merchant1.bulk_discounts.create!(percent:0, threshold: 0)
 
-      expect(ii_21.items_discount(ii_21.id)).to eq(20)
-      expect(ii_22.items_discount(ii_22.id)).to eq(10)
-      expect(ii_23.items_discount(ii_23.id)).to eq(0)
+      expect(ii_21.items_discount(ii_21.id)).to eq(@discount21)
+      expect(ii_22.items_discount(ii_22.id)).to eq(@discount22)
+      expect(ii_23.items_discount(ii_23.id)).to eq(@discountnull)
     end
   end
 end
