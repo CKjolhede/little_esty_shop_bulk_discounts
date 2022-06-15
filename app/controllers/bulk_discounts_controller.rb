@@ -27,13 +27,12 @@ before_action :find_discount_and_merchant, only: [:show, :edit, :update, :destro
 
   def create
     # find_merchant
-    discount = BulkDiscount.new(bulk_discount_params)
-    if discount.save
-      # flash.success= "New Discount Created"
-      redirect_to merchant_bulk_discounts_path(@merchant), notice: "New Discount Created"
-    else
-      redirect_to new_merchant_bulk_discount_path(@merchant), notice: "Invalid input. Use only positive integers"
-    end
+    discount = BulkDiscount.create(bulk_discount_params)
+    # if discount.save
+      redirect_to "/merchant/#{@merchant.id}/bulk_discounts", notice: "New Discount Created"
+    # else
+    #   redirect_to "/merchant/#{@merchant.id}/bulk_discounts/new", notice: "Invalid input. Use only positive integers"
+    # end
   end
 
   def destroy
