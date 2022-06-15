@@ -12,7 +12,6 @@ RSpec.describe BulkDiscount, type: :feature do
   end
 
   it "edit page has a form prepopulated with current discount attributes" do
-    save_and_open_page
       expect(page).to have_field(:percent, with: "20")
       expect(page).to have_field(:threshold, with: "300")
       expect(page).to_not have_field(with: "")
@@ -35,7 +34,6 @@ RSpec.describe BulkDiscount, type: :feature do
       fill_in :percent, with: '25'
       fill_in :threshold, with: '350'
       click_on "Submit"
-      save_and_open_page
       expect(current_path).to match(merchant_bulk_discount_path(@merchant1, @discount2))
       within("#percent") do
         expect(page).to have_content("Percent discount: 25%")
