@@ -39,4 +39,25 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
+
+  describe "instance methods" do
+    it 'identifies an items final discount using #items_discount' do
+      @merchant1 = Merchant.create!(name: 'I Care')
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_5 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+      @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+      @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
+      @item_3 = Item.create!(name: 'Brush', description: 'This takes out tangles', unit_price: 5, merchant_id: @merchant1.id)
+      ii_21 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_1.id, quantity: 20, unit_price: 10, status: 2)
+      ii_22 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_2.id, quantity: 10, unit_price: 10, status: 2)
+      ii_23 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_3.id, quantity: 5, unit_price: 10, status: 2)
+      @discount22 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 10)
+      @discount21 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 20)
+      @discountnull = @merchant1.bulk_discounts.create!(percent:0, threshold: 0)
+
+      expect(ii_21.items_discount(ii_21.id)).to eq(20)
+      expect(ii_22.items_discount(ii_22.id)).to eq(10)
+      expect(ii_23.items_discount(ii_23.id)).to eq(0)
+    end
+  end
 end
