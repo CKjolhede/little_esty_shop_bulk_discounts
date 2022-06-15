@@ -70,9 +70,8 @@ describe 'Admin Invoices Index Page' do
       @d1 = @m1.bulk_discounts.create!(percent: 10, threshold: 10)
       @d2 = @m1.bulk_discounts.create!(percent: 20, threshold: 20)
     visit admin_invoice_path(@i10.id)
-    save_and_open_page
     within("#discounted") do
-      expect(page).to have_content("$260.00")
+      expect(page).to have_content(260.0)
     end
   end
 

@@ -33,6 +33,6 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue
-    number_to_currency(self.total_revenue - self.total_discount)
+    self.total_revenue - self.total_discount
   end
 end
