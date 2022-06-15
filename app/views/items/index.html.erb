@@ -1,15 +1,14 @@
 <%= render partial: '/layouts/nav_container.html.erb' %>
 
 <body>
-  <div class="row">
+  <%# <div class="row">
     <p class='col-12'>My Items</p>
-  </div>
+  </div> %>
 
   <p><%= link_to "Create New Item", new_merchant_item_path(@merchant) %></p>
     
   <div class="row">
-    <p class='mr-auto col-sm-5'>Enabled Items</p>
-    <p class='ml-auto col-sm-5'>Top Items</p>
+    <p class='mr-auto col-sm-5'>My Enabled Items</p>
   </div>
 
   <ul class='mr-auto col-sm-4'>
@@ -24,7 +23,7 @@
   </ul>
   
   <div class="row">
-    <p class='mr-auto col-sm-5'>Disabled Merchants</p>
+    <p class='mr-auto col-sm-5'>My Disabled Merchants</p>
   </div>
   
   <ul class='mr-auto col-sm-4'>
@@ -38,6 +37,7 @@
     </section>
   </ul>
   
+    <p class='ml-auto col-sm-5'>Top Items</p>
   <ul class='ml-auto col-sm-4'>
   <section id="top_5">
     <% @merchant.top_5_items.each do |item| %>
