@@ -59,6 +59,22 @@ describe 'Admin Invoices Index Page' do
     expect(page).to_not have_content(@i2.total_revenue)
   end
 
+  it 'should display the total revenue after discounts applied' do
+      @i10 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: '2012-03-25 09:54:09')
+      @item_10 = Item.create!(name: 'test', description: 'lalala', unit_price: 50, merchant_id: @m1.id)
+      @item_11 = Item.create!(name: 'rest', description: 'dont rest me', unit_price: 100, merchant_id: @m1.id)
+      @item_12 = Item.create!(name: 'best', description: 'dont best me', unit_price: 200, merchant_id: @m1.id)
+      @ii_11 = InvoiceItem.create!(invoice_id: @i10.id, item_id: @item_10.id, quantity: 1, unit_price: 10, status: 1)
+      @ii_12 = InvoiceItem.create!(invoice_id: @i10.id, item_id: @item_11.id, quantity: 20, unit_price: 10, status: 1)
+      @ii_13 = InvoiceItem.create!(invoice_id: @i10.id, item_id: @item_12.id, quantity: 10, unit_price: 10, status: 1)
+      @d1 = @m1.bulk_discounts.create!(percent: 10, threshold: 10)
+      @d2 = @m1.bulk_discounts.create!(percent: 20, threshold: 20)
+    visit admin_invoice_path(@i10.id)
+    within("#discounted") do
+      expect(page).to have_content(260.0)
+    end
+  end
+
   it 'should have status as a select field that updates the invoices status' do
     within("#status-update-#{@i1.id}") do
       select('cancelled', :from => 'invoice[status]')

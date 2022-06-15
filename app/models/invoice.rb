@@ -23,7 +23,6 @@ class Invoice < ApplicationRecord
     .sum(&:total_discount) # '&' prevents subsequent method call if method is nil
   end
 
-
   def items_discounted
     invoice_items.joins(:bulk_discounts)
     .where('invoice_items.quantity >= bulk_discounts.threshold')
@@ -33,4 +32,7 @@ class Invoice < ApplicationRecord
     .group('invoice_items.id')
   end
 
+  def discounted_revenue
+    self.total_revenue - self.total_discount
+  end
 end
