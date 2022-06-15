@@ -97,22 +97,27 @@ RSpec.describe 'invoices show' do
  
   end
   
-  it "each item shows the discount applied to it as a link to that disounts show page" do
+  it "each item shows the discount applied to it as a link to that discounts show page" do
       @discount1 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 10)
       @discount2 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 20)
       @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
       @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
       @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 20, unit_price: 10, status: 1)
+      @ii_111 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 5, unit_price: 10, status: 1)
       @discount1 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 10)
       @discount2 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 20)
     visit merchant_invoice_path(@merchant1, @invoice_1)
       
-    within("#item-#{@item_1.id}") do  # qty 10, price 10, discount 10% 
-      expect(page).to have_content($10)
+    within("#the-status-#{@ii_1.id}") do  # qty 10, price 10, discount 10% 
+      expect(page).to have_link("10% off")
     end
-     within("#item-#{@item_8.id}") do # qty 20, price 10, discount 20%
-      expect(page).to have_content($40)
+     within("#the-status-#{@ii_11.id}") do # qty 20, price 10, discount 20%
+      expect(page).to have_link("20% off")
     end
+     within("#the-status-#{@ii_111.id}") do # qty 20, price 10, discount 20%
+      expect(page).to have_content("Min Quantity not met")
+    end
+    save_and_open_page
   end
 
   it "shows a select field to update the invoice status" do

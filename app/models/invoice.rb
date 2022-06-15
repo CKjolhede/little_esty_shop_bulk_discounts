@@ -31,7 +31,6 @@ class Invoice < ApplicationRecord
     .select('invoice_items.id')
     # .group('invoice_items.id, bulk_discounts.id')
     .group('invoice_items.id')
-    # .order(item_discount: :desc)
   end
 
 end
