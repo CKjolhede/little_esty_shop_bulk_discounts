@@ -94,7 +94,6 @@ RSpec.describe 'invoices show' do
     within("#total_net_revenue") do
       expect(page).to have_content($198)
     end
- 
   end
   
   it "each item shows the discount applied to it as a link to that discounts show page" do
@@ -117,7 +116,6 @@ RSpec.describe 'invoices show' do
      within("#the-status-#{@ii_111.id}") do # qty 20, price 10, discount 20%
       expect(page).to have_content("Min Quantity not met")
     end
-    save_and_open_page
   end
 
   it "shows a select field to update the invoice status" do

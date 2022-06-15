@@ -17,8 +17,11 @@ before_action :find_discount_and_merchant, only: [:show, :edit, :update, :destro
   end
 
   def update
-    @bulk_discount.update(bulk_discount_params)
-    redirect_to merchant_bulk_discount_path
+    if @bulk_discount.update(bulk_discount_params)
+    redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount), notice: "Discount Updated Successfully"
+    else
+      redirect_to "/merchant/#{@merchant.id}/bulk_discounts/#{@bulk_discount.id}/edit", notice: "Please re-enter your changes"
+    end
   end
 
 

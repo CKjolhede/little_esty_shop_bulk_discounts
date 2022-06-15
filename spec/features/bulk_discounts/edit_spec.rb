@@ -42,5 +42,13 @@ RSpec.describe BulkDiscount, type: :feature do
         expect(page).to have_content("Min purchase quantity required: 350")
       end
     end
+
+    it 'form does not update all valid discount information provided when submitted and redirects to bulk discount edit page' do
+  
+      fill_in :percent, with: ' '
+      fill_in :threshold, with: ' '
+      click_on "Submit"
+      expect(current_path).to match("/merchant/#{@merchant1.id}/bulk_discounts/#{@discount2.id}/edit")
+    end
   end
 end
