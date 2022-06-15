@@ -17,18 +17,6 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  # def items_discount(ii_id)
-  #   bulk_discounts = BulkDiscount.order(:threshold)
-  #   invoice_item = InvoiceItem.find(ii_id)
-  #   bulk_discount = nil
-  #   bulk_discounts.each do |bd|
-  #     if bd.threshold <= invoice_item.quantity
-  #       bulk_discount = bd
-  #     end
-  #   end
-  # bulk_discount
-  # end
-
   def items_discount
     bulk_discounts.where("bulk_discounts.threshold <= ?", quantity)
       .select('bulk_discounts.*')
